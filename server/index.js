@@ -16,10 +16,32 @@ massive({
 
     app.use(express.json());
 
-    app.post('/api/users', users.create);
-    app.get('/api/users', users.list);
-    app.get('/api/users/:id', users.getById);
+    // Step 2 & Step 3.1
+    app.post('/api/users', users.createUser);
+
+    // Step 3.2
+    app.get('/api/users', users.getAllUser);
+
+    // Step 3.3
+    app.get('/api/users/:id', users.getByID);
+
+    // Step 3.4
     app.get('/api/users/:id/profile', users.getProfile);
+
+    // Step 4.1
+    app.post('/api/posts', users.newPost);
+
+    // Step 4.2
+    app.get('/api/users/:id/post/:postId', users.getUserSinglePost);
+
+    // Step 4.3
+    app.get('/api/posts', users.getAllPosts);
+
+    // Step 5.1
+    app.post('/api/comments', users.newComment);
+
+    // Step 5.2
+    app.patch('/api/comments/:id', users.editComment);
 
     const port = 3000;
 

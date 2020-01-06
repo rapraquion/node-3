@@ -1,4 +1,4 @@
-function create(req, res) {
+function createUser(req, res) {
     const db = req.app.get('db');
 
     const { email, password } = req.body;
@@ -39,7 +39,7 @@ function create(req, res) {
         });
 }
 
-function list(req, res) {
+function getAllUser(req, res) {
     const db = req.app.get('db');
 
     db.users
@@ -51,7 +51,7 @@ function list(req, res) {
         });
 }
 
-function getById(req, res) {
+function getByID(req, res) {
     const db = req.app.get('db');
 
     db.users
@@ -63,7 +63,38 @@ function getById(req, res) {
         });
 }
 
+function getProfile(req, res) {
+    const db = req.app.get('db');
+
+    db.users
+
+}
+
+function newPost(req, res) {
+    const db = req.app.get('db');
+
+}
+
+function getUserSinglePost(req, res) {
+    const db = req.app.get('db');
+
+}
+
+function getAllPosts(req, res) {
+    const db = req.app.get('db');
+
+}
+
+function newComment(req, res) {
+    const db = req.app.get('db');
+
+}
+
+function editComment(req, res) {
+    const db = req.app.get('db');
+
+}
 
 module.exports = {
-    create, list, getById
+    createUser, getAllUser, getByID, getProfile, newPost, getUserSinglePost, getAllPosts, newComment, editComment
 };
