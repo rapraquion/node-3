@@ -66,35 +66,17 @@ function getByID(req, res) {
 function getProfile(req, res) {
     const db = req.app.get('db');
 
-    db.users
-
-}
-
-function newPost(req, res) {
-    const db = req.app.get('db');
-
-}
-
-function getUserSinglePost(req, res) {
-    const db = req.app.get('db');
-
-}
-
-function getAllPosts(req, res) {
-    const db = req.app.get('db');
-
-}
-
-function newComment(req, res) {
-    const db = req.app.get('db');
-
-}
-
-function editComment(req, res) {
-    const db = req.app.get('db');
-
+    db.users_profiles
+        .findOne({
+            userId: req.params.id,
+        })
+        .then(userProfile => res.status(200).json(profile))
+        .catch(e => {
+            console.error(e);
+            res.status(500).end();
+        })
 }
 
 module.exports = {
-    createUser, getAllUser, getByID, getProfile, newPost, getUserSinglePost, getAllPosts, newComment, editComment
+    createUser, getAllUser, getByID, getProfile
 };

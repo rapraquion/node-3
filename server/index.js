@@ -2,6 +2,8 @@ const express = require('express');
 const massive = require('massive');
 
 const users = require('./controllers/users');
+const posts = require('./controllers/posts');
+const comments = require('./controllers/comments');
 
 massive({
     host: 'localhost',
@@ -29,19 +31,22 @@ massive({
     app.get('/api/users/:id/profile', users.getProfile);
 
     // Step 4.1
-    app.post('/api/posts', users.newPost);
+    app.post('/api/posts', posts.newPost);
 
     // Step 4.2
-    app.get('/api/users/:id/post/:postId', users.getUserSinglePost);
+    app.get('/api/users/:id/post/:postId', posts.getUserSinglePost);
 
     // Step 4.3
-    app.get('/api/posts', users.getAllPosts);
+    app.get('/api/posts', posts.getAllPosts);
+
+    // Step 4.4
+    app.patch('./api/posts', posts.updatePost);
 
     // Step 5.1
-    app.post('/api/comments', users.newComment);
+    app.post('/api/comments', comments.newComment);
 
     // Step 5.2
-    app.patch('/api/comments/:id', users.editComment);
+    app.patch('/api/comments/:id', comments.editComment);
 
     const port = 3000;
 
