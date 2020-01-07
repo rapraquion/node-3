@@ -68,9 +68,9 @@ function getProfile(req, res) {
 
     db.users_profiles
         .findOne({
-            userId: req.params.id,
+            userId: req.params.email,
         })
-        .then(userProfile => res.status(200).json(profile))
+        .then(userProfile => res.status(200).json(userProfile))
         .catch(e => {
             console.error(e);
             res.status(500).end();

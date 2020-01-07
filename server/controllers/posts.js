@@ -18,6 +18,21 @@ function newPost(req, res) {
 function getUserSinglePost(req, res) {
     const db = req.app.get('db');
 
+    db.posts
+        .findOne(p => {
+            db.comments
+                .findOne({ postId: req.params.id })
+                .then(comment => res.status(200).json({ post, comment }))
+                .catch(e => {
+                    console.error(e);
+                    res.status(500).end();
+                })
+        })
+        .catch(e => {
+            console.error(e);
+            res.status(500).end();
+        })
+
 }
 
 function getAllPosts(req, res) {
@@ -26,8 +41,8 @@ function getAllPosts(req, res) {
     db.posts
         .find(p => {
             db.comments
-                .find({postId: req.params.id})
-                .then(comment => res.status(200).json({post, comment}))
+                .find({ postId: req.params.id })
+                .then(comment => res.status(200).json({ post, comment }))
                 .catch(e => {
                     console.error(e);
                     res.status(500).end();
@@ -47,7 +62,7 @@ function updatePost(req, res) {
     db.posts
         .update({
             id: req.params.id
-        },{
+        }, {
             content: content
         })
         .then(p => res.status(201).send(post))
