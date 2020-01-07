@@ -19,6 +19,14 @@ exports.up = (pgm) => {
     user_info_id: {
       type: 'integer',
       references: 'user_profile'
+    },
+    userId: {
+      type: 'integer',
+      references: 'comments'
+    },
+    user_id: {
+      type: 'integer',
+      references: 'posts'
     }
   });
 };

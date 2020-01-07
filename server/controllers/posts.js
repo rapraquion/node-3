@@ -65,7 +65,7 @@ function updatePost(req, res) {
         }, {
             content: content
         })
-        .then(p => res.status(201).send(post))
+        .then(p => res.status(201).send(p))
         .catch(e => {
             console.error(e);
             res.status(500).end();

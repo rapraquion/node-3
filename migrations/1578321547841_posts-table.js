@@ -4,7 +4,7 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
     pgm.createTable('posts', {
-        userId: {
+        user_id: {
             type: 'serial',
             primaryKey: true,
         },
