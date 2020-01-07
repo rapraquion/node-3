@@ -1,7 +1,12 @@
-function newComment(req, res) {
-    const db = req.app.get('db');
+const verify = require('./verify');
 
-    db.comments
+function newComment(req, res) {
+    const auth = verify.verify(req, res);
+    if (auth) {
+        const db = req.app.get('db');
+        const { userId, postId, comment } = req.body;
+
+        db.comments
         .save({
             userId,
             postId,
@@ -12,24 +17,27 @@ function newComment(req, res) {
             console.error(e);
             res.status(500).end();
         })
+    }    
 }
 
 function editComment(req, res) {
-    const db = req.app.get('db');
-
-    const { comment } = req.body
-
-    db.comments
-        .update({ 
-            id: req.params.id 
-        },{
-            comment: comment
-        })
-        .then(p => res.status(201).send(comment))
-        .catch(e => {
-            console.error(e);
-            res.status(500).end();
-        })
+    const auth = verify.verifyUser(req, res);
+    if (auth) {
+        const db = req.app.get('db');
+        const { id } = req.params;
+        const { comment } = req.body;
+    
+        db.comments
+            .save({ 
+                id, comment
+            })
+            .then(p => res.status(201).send(comment))
+            .catch(e => {
+                console.error(e);
+                res.status(500).end();
+            });
+    }
+    else res.status(401).end();
 }
 
 module.exports = { newComment, editComment }

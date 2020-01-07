@@ -15,18 +15,6 @@ exports.up = (pgm) => {
     password: {
       type: 'text',
       notNull: true,
-    },
-    user_info_id: {
-      type: 'integer',
-      references: 'user_profile'
-    },
-    userId: {
-      type: 'integer',
-      references: 'comments'
-    },
-    user_id: {
-      type: 'integer',
-      references: 'posts'
     }
   });
 };

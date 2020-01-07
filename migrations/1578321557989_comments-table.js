@@ -4,13 +4,23 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
     pgm.createTable('comments', {
-        userId: {
+        id: {
             type: 'serial',
-            primaryKey: true,
+            primaryKey: true
+        },
+        userId: {
+            type: 'integer',
+            notNull: true,
+            references: 'users'
+        },
+        postId: {
+            type: 'integer',
+            notNull: true,
+            references: 'posts'
         },
         comment: {
             type: 'text',
-            notNull: true,
+            notNull: true
         },
     });
 };

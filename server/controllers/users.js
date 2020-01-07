@@ -1,42 +1,77 @@
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
+const secret = require('../../secret');
+const verify = require('./verify');
+
+
 function createUser(req, res) {
     const db = req.app.get('db');
 
     const { email, password } = req.body;
 
-    db.users // heres the new stuff, using massive to actually query the database.
-        .save({
-            email,
-            password,
-        })
-        .then(user => res.status(201).json(user)) // returns a promise so we need to use .then
-        .catch(err => {
-            console.error(err); // if something happens we handle the error as well.
-            res.status(500).end();
-        });
-
-    db.users
-        .insert(
-            {
+    argon2
+        .hash(password)
+        .then(hash => {
+            return db.users.insert({
                 email,
-                password,
+                password: hash,
                 user_profiles: [
-                    // this is what is specifying the object
-                    // to insert into the related 'user_profiles' table
                     {
                         userId: undefined,
                         about: null,
-                        thumbnail: null,
-                    },
-                ],
-            },
-            {
-                deepInsert: true, // this option here tells massive to create the related object
+                        thumbnail: null
+                    }
+                ]
+            },{
+                fields: ['id', 'email'],
+                deepInsert: true
+            });
+        })
+        .then(user => {
+            const token = jwt.sign({ userId: user.id }, secret);
+            res.status(201).json({ ...user, token });
+        })
+        .catch(e => {
+            console.error(e);
+            res.status(500).end();
+        })
+}
+
+function login(req, res) {
+    const db = req.app.get('db');
+    const { email, password } = req.body;
+
+    db.users
+        .findOne({
+            email,
+        },{
+            fields: ['id', 'email', 'password']
+        })
+        .then(user => {
+            if(!user) {
+                throw new Error('Invalid Email');
             }
-        )
-        .then(user => res.status(201).json(user))
-        .catch(err => {
-            console.error(err);
-        });
+
+            return argon2.verify(user.password, password)
+            .then(valid => {
+                if (!valid) {
+                    throw new Error('Incorrect Password');
+                }
+
+                const token = jwt.sign({ userId: user.id }, secret);
+                delete user.password;
+                res.status(200).json({ ...user, token });
+            })
+        })
+        .catch(e => {
+            if (['Invalid Emil', 'Invalid Passwrd'].includes(err.message)){
+            res.status(400).json({ error: 'err.message' });
+            }
+            else {
+                console.error(e);
+                res.status(500).end();
+            }
+        })
 }
 
 function getAllUser(req, res) {
@@ -78,5 +113,5 @@ function getProfile(req, res) {
 }
 
 module.exports = {
-    createUser, getAllUser, getByID, getProfile
+    createUser, getAllUser, getByID, getProfile, login
 };

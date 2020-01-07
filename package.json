@@ -12,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.25.1",
     "docker-compose": "^0.23.2",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "massive": "^6.1.4",
     "node-pg-migrate": "^3.21.0",
     "pg": "^7.11.0"

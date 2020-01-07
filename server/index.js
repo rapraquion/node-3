@@ -48,6 +48,9 @@ massive({
     // Step 5.2
     app.patch('/api/comments/:id', comments.editComment);
 
+    // Login
+    app.post('/api/login', users.login);
+
     const port = 3000;
 
     app.listen(port, () => {
