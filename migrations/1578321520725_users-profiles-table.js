@@ -3,8 +3,8 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-    pgm.createTable('users', {
-        userId: {
+    pgm.createTable('user_profile', {
+        user_info_id: {
             type: 'serial',
             primaryKey: true,
         },

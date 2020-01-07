@@ -3,13 +3,10 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-    pgm.createTable('users', {
+    pgm.createTable('comments', {
         userId: {
             type: 'serial',
             primaryKey: true,
-        },
-        postId: {
-            type: 'serial',
         },
         comment: {
             type: 'text',

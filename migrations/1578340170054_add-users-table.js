@@ -16,6 +16,10 @@ exports.up = (pgm) => {
       type: 'text',
       notNull: true,
     },
+    user_info_id: {
+      type: 'integer',
+      references: 'user_profile'
+    }
   });
 };
 
