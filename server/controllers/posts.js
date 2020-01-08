@@ -22,7 +22,7 @@ function getUserSinglePost(req, res) {
         .findOne(p => {
             db.comments
                 .findOne({ postId: req.params.id })
-                .then(comment => res.status(200).json({ post, comment }))
+                .then(comment => res.status(200).json({ p, comment }))
                 .catch(e => {
                     console.error(e);
                     res.status(500).end();
@@ -42,7 +42,7 @@ function getAllPosts(req, res) {
         .find(p => {
             db.comments
                 .find({ postId: req.params.id })
-                .then(comment => res.status(200).json({ post, comment }))
+                .then(comment => res.status(200).json({ p, comment }))
                 .catch(e => {
                     console.error(e);
                     res.status(500).end();
@@ -61,7 +61,7 @@ function updatePost(req, res) {
 
     db.posts
         .update({
-            id: req.params.id
+            postId: req.params.id
         }, {
             content: content
         })

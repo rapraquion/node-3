@@ -15,6 +15,10 @@ exports.up = (pgm) => {
     password: {
       type: 'text',
       notNull: true,
+    },
+    userId: {
+      type: 'integer',
+      references: '"userProfile"'
     }
   });
 };

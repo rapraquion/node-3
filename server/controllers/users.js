@@ -17,7 +17,7 @@ function createUser(req, res) {
                 password: hash,
                 user_profiles: [
                     {
-                        userId: undefined,
+                        userId,
                         about: null,
                         thumbnail: null
                     }
@@ -101,9 +101,9 @@ function getByID(req, res) {
 function getProfile(req, res) {
     const db = req.app.get('db');
 
-    db.usersProfiles
+    db.userProfiles
         .findOne({
-            userId: req.params.email,
+            email: req.params.email,
         })
         .then(userProfile => res.status(200).json(userProfile))
         .catch(e => {
