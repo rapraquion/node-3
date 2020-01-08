@@ -17,14 +17,14 @@ function newComment(req, res) {
 
 function editComment(req, res) {
     const db = req.app.get('db');
-    const { id } = req.params;
+    const { postId } = req.params;
     const { comment } = req.body;
 
     db.comments
         .save({
-            id, comment
+            postId, comment
         })
-        .then(p => res.status(201).send(comment))
+        .then(p => res.status(201).send({ p, comment }))
         .catch(e => {
             console.error(e);
             res.status(500).end();
