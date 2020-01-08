@@ -3,7 +3,7 @@
 exports.constraint = 'unique_email';
 
 exports.up = (pgm) => {
-    pgm.addConstraint('user', exports.constraint, {
+    pgm.addConstraint('users', exports.constraint, {
         unique: 'email'
     });
 };
