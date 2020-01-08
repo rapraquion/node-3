@@ -8,7 +8,7 @@ function newPost(req, res) {
             userId,
             content
         })
-        .then(p => res.status(201).json(post))
+        .then(p => res.status(201).json(p))
         .catch(e => {
             console.error(e);
             res.status(500).end();

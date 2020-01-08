@@ -22,7 +22,7 @@ function createUser(req, res) {
                         thumbnail: null
                     }
                 ]
-            },{
+            }, {
                 fields: ['id', 'email'],
                 deepInsert: true
             });
@@ -44,28 +44,28 @@ function login(req, res) {
     db.users
         .findOne({
             email,
-        },{
+        }, {
             fields: ['id', 'email', 'password']
         })
         .then(user => {
-            if(!user) {
+            if (!user) {
                 throw new Error('Invalid Email');
             }
 
             return argon2.verify(user.password, password)
-            .then(valid => {
-                if (!valid) {
-                    throw new Error('Incorrect Password');
-                }
+                .then(valid => {
+                    if (!valid) {
+                        throw new Error('Incorrect Password');
+                    }
 
-                const token = jwt.sign({ userId: user.id }, secret);
-                delete user.password;
-                res.status(200).json({ ...user, token });
-            })
+                    const token = jwt.sign({ userId: user.id }, secret);
+                    delete user.password;
+                    res.status(200).json({ ...user, token });
+                })
         })
         .catch(e => {
-            if (['Invalid Emil', 'Invalid Passwrd'].includes(err.message)){
-            res.status(400).json({ error: 'err.message' });
+            if (['Invalid Email', 'Invalid Password'].includes(err.message)) {
+                res.status(400).json({ error: 'err.message' });
             }
             else {
                 console.error(e);
