@@ -4,7 +4,7 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
     pgm.createTable('userProfile', {
-        profileId: {
+        profile_id: {
             type: 'serial',
             primaryKey: true
         },
@@ -14,9 +14,9 @@ exports.up = (pgm) => {
         thumbnail: {
             type: 'text'
         },
-        userId: {
+        user_id: {
             type: 'integer',
-            references: '"users"'
+            references: 'users'
         }
     });
 };
