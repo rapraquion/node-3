@@ -18,7 +18,7 @@ exports.up = (pgm) => {
         },
         post_id: {
             type: 'integer',
-            references: 'posts'
+            references: '"posts"'
         }
     });
 };

@@ -16,7 +16,7 @@ exports.up = (pgm) => {
         },
         user_id: {
             type: 'integer',
-            references: 'users'
+            references: '"users"'
         }
     });
 };
