@@ -101,7 +101,7 @@ function getByID(req, res) {
 function getProfile(req, res) {
     const db = req.app.get('db');
 
-    db.users_profiles
+    db.usersProfiles
         .findOne({
             userId: req.params.email,
         })
