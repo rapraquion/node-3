@@ -17,7 +17,7 @@ function createUser(req, res) {
                 password: hash,
                 user_profiles: [
                     {
-                        userId,
+                        user_id,
                         about: null,
                         thumbnail: null
                     }
@@ -28,7 +28,7 @@ function createUser(req, res) {
             });
         })
         .then(user => {
-            const token = jwt.sign({ userId: user.id }, secret);
+            const token = jwt.sign({ user_id: user.id }, secret);
             res.status(201).json({ ...user, token });
         })
         .catch(e => {
